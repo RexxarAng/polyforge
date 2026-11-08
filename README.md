@@ -1,4 +1,4 @@
-# Blender Game
+# Polyforge
 
 A web game built with [Three.js](https://threejs.org/), using assets made in Blender.
 

@@ -24,9 +24,9 @@ jobs:
       - run: npm run build
 
       - name: Zip build
-        run: cd dist && zip -r ../blender-game-${{ github.ref_name }}-web.zip .
+        run: cd dist && zip -r ../polyforge-${{ github.ref_name }}-web.zip .
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: blender-game-${{ github.ref_name }}-web.zip
+          files: polyforge-${{ github.ref_name }}-web.zip
           generate_release_notes: true
