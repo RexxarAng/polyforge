@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Zip build
+        run: cd dist && zip -r ../blender-game-${{ github.ref_name }}-web.zip .
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: blender-game-${{ github.ref_name }}-web.zip
+          generate_release_notes: true
