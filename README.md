@@ -1,5 +1,7 @@
 # Polyforge
 
+**[Play in your browser →](https://rexxarang.github.io/polyforge/)**
+
 A top-down RC car drifting game built with [Three.js](https://threejs.org/), using low-poly assets made in Blender.
 
 Drift around the tyre islands to build points. The longer you hold a drift, the higher the multiplier, up to ×5. If you hit a wall mid-drift, you lose the points you haven't banked yet.
