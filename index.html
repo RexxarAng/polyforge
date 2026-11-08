@@ -6,10 +6,83 @@
     <title>Polyforge</title>
     <style>
       html, body { margin: 0; height: 100%; overflow: hidden; background: #111; }
+      body {
+        font-family: ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+        color: #fff;
+        user-select: none;
+      }
       canvas { display: block; }
+      .hud { position: fixed; inset: 0; pointer-events: none; }
+      .panel {
+        position: absolute; top: 16px; padding: 10px 16px; border-radius: 12px;
+        background: rgba(10, 12, 18, 0.55); backdrop-filter: blur(6px);
+      }
+      .panel.left { left: 16px; }
+      .panel.right { right: 16px; text-align: right; }
+      .label { font-size: 11px; letter-spacing: 0.12em; opacity: 0.7; }
+      .big { font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+      .mid { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+      #drift {
+        position: absolute; top: 18%; left: 50%; transform: translate(-50%, 0) scale(0.8);
+        text-align: center; opacity: 0; transition: opacity 0.2s, transform 0.2s;
+        font-style: italic; font-weight: 900; text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+      }
+      #drift.on { opacity: 1; transform: translate(-50%, 0) scale(1); }
+      #driftPts { font-size: 44px; font-variant-numeric: tabular-nums; }
+      #driftMult { font-size: 26px; color: #ffb02e; margin-left: 8px; }
+      #popup {
+        position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
+        font-size: 34px; font-weight: 900; font-style: italic; opacity: 0;
+        text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+      }
+      #popup.good { color: #7dff9a; }
+      #popup.bad { color: #ff5a4a; }
+      #popup.show { animation: pop 1.2s ease-out forwards; }
+      @keyframes pop {
+        0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
+        15% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
+        70% { opacity: 1; transform: translate(-50%, -10px) scale(1); }
+        100% { opacity: 0; transform: translate(-50%, -30px) scale(1); }
+      }
+      .help {
+        position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+        font-size: 13px; opacity: 0.8; white-space: nowrap;
+        background: rgba(10, 12, 18, 0.45); padding: 6px 12px; border-radius: 8px;
+      }
+      #assetNote { position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); font-size: 12px; opacity: 0.6; white-space: nowrap; }
+      #start {
+        position: fixed; inset: 0; display: grid; place-content: center; text-align: center;
+        background: radial-gradient(circle, rgba(10, 12, 18, 0.35), rgba(10, 12, 18, 0.8));
+        transition: opacity 0.4s; cursor: pointer;
+      }
+      #start.hidden { opacity: 0; pointer-events: none; }
+      #start h1 { margin: 0; font-size: clamp(48px, 10vw, 96px); font-style: italic; font-weight: 900; letter-spacing: -0.02em; }
+      #start h1 span { color: #ff6a1a; }
+      #start p { margin: 8px 0 0; opacity: 0.85; }
     </style>
   </head>
   <body>
+    <div class="hud">
+      <div class="panel left">
+        <div class="label">SCORE</div>
+        <div class="big" id="score">0</div>
+        <div class="label">BEST DRIFT</div>
+        <div class="mid" id="best">0</div>
+      </div>
+      <div class="panel right">
+        <div class="big" id="speed">0</div>
+        <div class="label">KM/H</div>
+        <div class="label" style="margin-top: 6px">CONES HIT <span id="cones">0</span></div>
+      </div>
+      <div id="drift"><div class="label">DRIFT</div><span id="driftPts">0</span><span id="driftMult">×1</span></div>
+      <div id="popup"></div>
+      <div id="assetNote"></div>
+      <div class="help">W/↑ throttle · S/↓ brake · A/D steer · SPACE handbrake · R reset · M mute</div>
+    </div>
+    <div id="start">
+      <h1>POLY<span>FORGE</span></h1>
+      <p>RC drift arena — press any key to start</p>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

@@ -6,3 +6,4 @@ dist/
 *.blend1
 *.blend2
 *.blend@
+__pycache__/
